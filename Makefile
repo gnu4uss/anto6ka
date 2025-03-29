@@ -1,5 +1,6 @@
-finaly: main.o
-	g++ -g -o $@ $^
-clean:
-	rm -f finaly *.o
+CXXFLAGS = -g # Debug
+finaly: main.o dz1.cpp
+	g++ $(CXXFLAGS) -o $@ $^
 
+clean:
+	rm -f *.o finaly
