@@ -1,27 +1,20 @@
 #include <iostream>
-#include "dz1.h"
-int main(int, char**){
-	const int arr_size = 15;
-	int array[arr_size];
+#include "array_info.h"
 
-	for (size_t i = 0; i < arr_size; ++i)
-		array[i] = i;
+int main(){
+	int* ar = new int[6] {1, 2, 3, 4, 5, 10};
+	int size = 6;
+	struct ArrayInfo myArrayInfo;
+	myArrayInfo.ar = ar;
+	myArrayInfo.size = size;
+	getInfoArray(&myArrayInfo);
+	MinMax res_MinMax = GetMaxMin(ar, size);
+	CountNum res_CouNum = GetStatNumber(ar, size);
 
-	//std::random_device rd; 
-    //std::mt19937 gen(rd());
-	//std::uniform_int_distribution<> dis(1, 100);
+// 	std::cout << "Min: " << res_MinMax.ind_min << "\n" << "Max: " << res_MinMax.ind_max << std::endl;
+// 	std::cout << "Pos: " << res_CouNum.pos << "\n" << "Zero: " << res_CouNum.zero << "\n" << "Neg: " << res_CouNum.neg << std::endl;
 
-    //for (int i = 0; i < arr_size; i++) {
-    //    array[i] = dis(gen);
-    //}
-// 	std::cout << "Running ShowNum\n";
-	ShowNum(array, arr_size); std::cout << std::endl;
-// 	std::cout << "Running ShowNum_reverse\n";
-	ShowNum_reverse(array, arr_size); std::cout << std::endl;
-// 	std::cout << "Running ShowEven\n";
-	ShowEven(array, arr_size); std::cout << std::endl;
-	//std::cout << std::endl;
-
-	return 0;
+	delete[] ar;
+    return 0;
 }
 

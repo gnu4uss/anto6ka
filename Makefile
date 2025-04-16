@@ -1,5 +1,5 @@
 CXXFLAGS = -g # Debug
-finaly: main.o dz1.cpp
+finaly: main.o array_info.o
 	g++ $(CXXFLAGS) -o $@ $^
 
 clean:
