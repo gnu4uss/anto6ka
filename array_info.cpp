@@ -38,3 +38,24 @@ CountNum GetStatNumber(const int* ar, int size){
 	}
 	return result;
 }
+
+int* CreateAr(int size) {
+    return new int[size];
+}
+
+int* CreateAr(int size, int number) {
+    int* arr = new int[size];
+    for (int i = 0; i < size; ++i) {
+        arr[i] = number;
+    }
+    return arr;
+}
+
+int* CreateAr(int size, int min, int max) {
+    int* arr = new int[size];
+    srand(time(0));
+    for (int i = 0; i < size; ++i) {
+        arr[i] = min + rand() % (max - min + 1);
+    }
+    return arr;
+}

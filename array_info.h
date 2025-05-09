@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstdlib>
+#include <ctime>
+
 struct ArrayInfo {
 	int* ar;
 	int size;
@@ -24,4 +27,8 @@ struct CountNum {
 };
 
 struct CountNum GetStatNumber(const int* ar, int size);
+
+int* CreateAr(int size);
+int* CreateAr(int size, int number);
+int* CreateAr(int size, int min, int max);
 
