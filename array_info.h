@@ -40,4 +40,5 @@ struct StatArray {
 };
 
 StatArray GetStatArray(const int* ar, int size);
+void ShowElement(const int* ar, int size, int col_count, char delimeter);
 

@@ -32,3 +32,19 @@ void bubble_sort(int* ar, int size, bool isAscending) {
         }
     }
 }
+
+void selection_sort(int* ar, int size, bool isAscending) {
+    for (int i = 0; i < size - 1; ++i) {
+        int extreme_index = i;
+        for (int j = i + 1; j < size; ++j) {
+            if (isAscending ? (ar[j] < ar[extreme_index]) : (ar[j] > ar[extreme_index])) {
+                extreme_index = j;
+            }
+        }
+        if (extreme_index != i) {
+            int temp = ar[i];
+            ar[i] = ar[extreme_index];
+            ar[extreme_index] = temp;
+        }
+    }
+}

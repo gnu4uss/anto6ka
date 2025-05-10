@@ -1,5 +1,6 @@
 #include <iostream>
 #include "array_info.h"
+#include "sorts.h"
 
 int main(){
 // 	int* ar = new int[6] {1, 2, 3, 4, 5, 10};
@@ -23,6 +24,15 @@ int main(){
 //     }
 //     std::cout << std::endl;
 // 	delete [] myArray;
+//
+	int arr[] = {5, 3, 8, 1, 2, 7, 4, 6, 9, 10};
+    const int size = 10;
+
+    selection_sort(arr, size, true);
+    ShowElement(arr, size, 4, '\t');
+
+    selection_sort(arr, size, false);
+    ShowElement(arr, size, 3, ' ');
     return 0;
 }
 

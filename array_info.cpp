@@ -1,4 +1,5 @@
 #include "array_info.h"
+#include <iostream>
 
 void getInfoArray(struct ArrayInfo* arInfo){
 // 	arInfo->ar = nullptr;
@@ -105,4 +106,15 @@ StatArray GetStatArray(const int* ar, int size) {
 
     delete[] freq;
     return result;
+}
+
+void ShowElement(const int* ar, int size, int col_count, char delimeter) {
+    for (int i = 0; i < size; ++i) {
+        std::cout << ar[i];
+        if ((i + 1) % col_count == 0 || i == size - 1) {
+            std::cout << '\n';
+        } else {
+            std::cout << delimeter;
+        }
+    }
 }
