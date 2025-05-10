@@ -59,3 +59,50 @@ int* CreateAr(int size, int min, int max) {
     }
     return arr;
 }
+
+StatArray GetStatArray(const int* ar, int size) {
+    StatArray result;
+    result.ar = nullptr;
+    result.probabilities = nullptr;
+    result.size = 0;
+    result.size_prob = 0;
+
+    if (size == 0 || ar == nullptr) {
+        return result;
+    }
+    
+    int max_num = ar[0];
+    for (int i = 1; i < size; ++i) {
+        if (ar[i] > max_num) {
+            max_num = ar[i];
+        }
+    }
+    result.size_prob = max_num + 1;
+    
+    int* freq = new int[result.size_prob](); 
+    
+    for (int i = 0; i < size; ++i) {
+        freq[ar[i]]++;
+    }
+    
+    int unique_count = 0;
+    for (int i = 0; i < result.size_prob; ++i) {
+        if (freq[i] > 0) {
+            unique_count++;
+        }
+    }
+    result.size = unique_count;
+    
+    result.ar = new int[result.size];
+    result.probabilities = new double[result.size_prob]();
+    int index = 0;
+    for (int i = 0; i < result.size_prob; ++i) {
+        if (freq[i] > 0) {
+            result.ar[index++] = i;
+            result.probabilities[i] = static_cast<double>(freq[i]) / size;
+        }
+    }
+
+    delete[] freq;
+    return result;
+}

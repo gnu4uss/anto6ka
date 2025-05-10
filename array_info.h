@@ -32,3 +32,12 @@ int* CreateAr(int size);
 int* CreateAr(int size, int number);
 int* CreateAr(int size, int min, int max);
 
+struct StatArray {
+    int* ar;          
+    int size;         
+    double* probabilities; 
+    int size_prob;     
+};
+
+StatArray GetStatArray(const int* ar, int size);
+
