@@ -1,38 +1,56 @@
-#include <iostream>
-#include "array_info.h"
-#include "sorts.h"
+#include "sorts_high.h"
+#include "MeasTime.h"
 
-int main(){
-// 	int* ar = new int[6] {1, 2, 3, 4, 5, 10};
-// 	int size = 6;
-// 	struct ArrayInfo myArrayInfo;
-// 	myArrayInfo.ar = ar;
-// 	myArrayInfo.size = size;
-// 	getInfoArray(&myArrayInfo);
-// 	MinMax res_MinMax = GetMaxMin(ar, size);
-// 	CountNum res_CouNum = GetStatNumber(ar, size);
-// 	std::cout << "Min: " << res_MinMax.ind_min << "\n" << "Max: " << res_MinMax.ind_max << std::endl;
-// 	std::cout << "Pos: " << res_CouNum.pos << "\n" << "Zero: " << res_CouNum.zero << "\n" << "Neg: " << res_CouNum.neg << std::endl;
-// 	delete[] ar;
+int main() {
+    srand(time(0));
 
-// 	int min = 50;
-// 	int max = 100;
-// 	int size = 6;
-// 	int* myArray = CreateAr(size, min, max);
-// 	for (int i = 0; i < size; ++i) {
-// 		std::cout << myArray[i] << " ";
-//     }
-//     std::cout << std::endl;
-// 	delete [] myArray;
-//
-	int arr[] = {5, 3, 8, 1, 2, 7, 4, 6, 9, 10};
-    const int size = 10;
+    const int numSizes = 5;
+    int sizes[numSizes] = {1000, 5000, 10000, 20000, 50000};
 
-    selection_sort(arr, size, true);
-    ShowElement(arr, size, 4, '\t');
+    for (int i = 0; i < numSizes; ++i) {
+        int size = sizes[i];
+        int* arr = new int[size];
 
-    selection_sort(arr, size, false);
-    ShowElement(arr, size, 3, ' ');
+        std::cout << "\nArray size: " << size << std::endl;
+        
+        fillArray(arr, size);
+        auto start = std::chrono::high_resolution_clock::now();
+        bubbleSort(arr, size, ascending);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff = end - start;
+        std::cout << "Bubble Sort: " << diff.count() << " sec" << std::endl;
+        
+        fillArray(arr, size);
+        start = std::chrono::high_resolution_clock::now();
+        insertionSort(arr, size, ascending);
+        end = std::chrono::high_resolution_clock::now();
+        diff = end - start;
+        std::cout << "Insertion Sort: " << diff.count() << " sec" << std::endl;
+        
+        fillArray(arr, size);
+        start = std::chrono::high_resolution_clock::now();
+        selectionSort(arr, size, ascending);
+        end = std::chrono::high_resolution_clock::now();
+        diff = end - start;
+        std::cout << "Selection Sort: " << diff.count() << " sec" << std::endl;
+        
+        fillArray(arr, size);
+        start = std::chrono::high_resolution_clock::now();
+        quickSort(arr, size, ascending);
+        end = std::chrono::high_resolution_clock::now();
+        diff = end - start;
+        std::cout << "Quick Sort: " << diff.count() << " sec" << std::endl;
+        
+        fillArray(arr, size);
+        start = std::chrono::high_resolution_clock::now();
+        mergeSort(arr, size, ascending);
+        end = std::chrono::high_resolution_clock::now();
+        diff = end - start;
+        std::cout << "Merge Sort: " << diff.count() << " sec" << std::endl;
+
+        delete[] arr;
+    }
+
     return 0;
 }
 
