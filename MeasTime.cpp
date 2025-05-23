@@ -42,20 +42,6 @@ void selectionSort(int* ar, int size, bool (*comp)(int a, int b)) {
     }
 }
 
-int partition(int* ar, int low, int high, bool (*comp)(int a, int b)) {
-    int pivot = ar[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (comp(ar[j], pivot)) {
-            i++;
-            std::swap(ar[i], ar[j]);
-        }
-    }
-    std::swap(ar[i + 1], ar[high]);
-    return i + 1;
-}
-
 void quickSort(int* ar, int size, bool (*comp)(int a, int b)) {
     if (size <= 1) return;
 
@@ -141,91 +127,23 @@ void mergeSort(int* ar, int size, bool (*comp)(int a, int b)) {
     delete[] right;
 }
 
-// void getTime() {
-//     const int numSizes = 27;
-//     int sizes[numSizes] = {100, 500, 750, 900, 1400, 2000, 2500, 4100,
-//                          5000, 7800, 9500, 12000, 13000, 15000, 25000, 33000, 
-//                          50000, 100000, 140000, 180000, 250000, 400000, 
-//                          500000, 655000, 800000, 840000, 1000000};
-//     
-//     const long long TIME_LIMIT = 2000000000; // 2 секунды 
-//     
-    // Заголовки с фиксированной шириной
-//     std::cout << std::left << std::setw(8) << "N" 
-//               << std::setw(12) << "Bubble" 
-//               << std::setw(12) << "Insert" 
-//               << std::setw(12) << "Select" 
-//               << std::setw(12) << "Quick" 
-//               << std::setw(12) << "Merge" 
-//               << "\n" << std::endl;
-// 
-//     void(*name_sort[5])(int*, int, bool(*) (int, int)) = {
-//         bubbleSort, insertionSort, selectionSort, quickSort, mergeSort
-//     };
-//     
-//     bool algorithmStopped[5] = {false};
-//     
-//     for (int i = 0; i < numSizes; i++) {
-//         int size = sizes[i];
-//         std::cout << std::left << std::setw(8) << size;
-//         
-//         int* original_arr = new int[size];
-//         for (int k = 0; k < size; k++) {
-//             original_arr[k] = rand() % 100;
-//         }
-//         
-//         for (int n = 0; n < 5; n++) {
-//             if (algorithmStopped[n]) {
-//                 std::cout << std::setw(12) << "-";
-//                 continue;
-//             }
-//             
-//             int* arr = new int[size];
-//             for (int j = 0; j < size; j++) {
-//                 arr[j] = original_arr[j];
-//             }
-//             
-//             auto start = std::chrono::high_resolution_clock::now();
-//             name_sort[n](arr, size, ascending);
-//             auto end = std::chrono::high_resolution_clock::now();
-//             
-//             long long duration_time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-//             
-//             if (duration_time > TIME_LIMIT) {
-//                 algorithmStopped[n] = true;
-//                 std::cout << std::setw(12) << "-";
-//             } else {
-                // Выводим время с фиксированной шириной
-//                 std::cout << std::setw(12) << duration_time;
-//             }
-//             
-//             delete[] arr;
-//         }
-//         
-//         delete[] original_arr;
-//         std::cout << "\n";
-//     }
-//}
-
 void getTime() {
     const int numSizes = 27;
     int sizes[numSizes] = {100, 500, 750, 900, 1400, 2000, 2500, 4100,
-                          5000, 7800, 9500, 12000, 13000, 15000, 25000, 33000, 
-                          50000, 100000, 140000, 180000, 250000, 400000, 
-                          500000, 655000, 800000, 840000, 1000000};
+                         5000, 7800, 9500, 12000, 13000, 15000, 25000, 33000, 
+                         50000, 100000, 140000, 180000, 250000, 400000, 
+                         500000, 655000, 800000, 840000, 1000000};
     
-    const long long TIME_LIMIT = 2000000000; // 2 секунды (в наносекундах)
+    const auto TIME_LIMIT = std::chrono::seconds(2); 
     
-    // Открываем файл для записи
-    std::ofstream outfile("sorting_times.dat");
-    if (!outfile.is_open()) {
-        std::cerr << "Error!" << std::endl;
-        return;
-    }
-    
-    // Заголовок файла (опционально, для удобства)
-    outfile << "# N Bubble Insert Select Quick Merge\n";
-    
+    std::cout << std::left << std::setw(8) << "N" 
+              << std::setw(12) << "Bubble" 
+              << std::setw(12) << "Insert" 
+              << std::setw(12) << "Select" 
+              << std::setw(12) << "Quick" 
+              << std::setw(12) << "Merge" 
+              << "\n" << std::endl;
+
     void(*name_sort[5])(int*, int, bool(*) (int, int)) = {
         bubbleSort, insertionSort, selectionSort, quickSort, mergeSort
     };
@@ -234,7 +152,7 @@ void getTime() {
     
     for (int i = 0; i < numSizes; i++) {
         int size = sizes[i];
-        outfile << size << " ";  // Записываем размер массива
+        std::cout << std::left << std::setw(8) << size;
         
         int* original_arr = new int[size];
         for (int k = 0; k < size; k++) {
@@ -243,33 +161,33 @@ void getTime() {
         
         for (int n = 0; n < 5; n++) {
             if (algorithmStopped[n]) {
-                outfile << "- ";  // Если сортировка превысила лимит времени
+                std::cout << std::setw(12) << "-";
                 continue;
             }
             
             int* arr = new int[size];
-            std::copy(original_arr, original_arr + size, arr);  // Копируем массив
+            for (int j = 0; j < size; j++) {
+                arr[j] = original_arr[j];
+            }
             
             auto start = std::chrono::high_resolution_clock::now();
             name_sort[n](arr, size, ascending);
             auto end = std::chrono::high_resolution_clock::now();
             
-            long long duration_time = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+            auto duration_time = end - start;  // тип duration<nanoseconds>
             
-            if (duration_time > TIME_LIMIT) {
+            if (duration_time > TIME_LIMIT) {  // корректное сравнение duration
                 algorithmStopped[n] = true;
-                outfile << "- ";  // Превышен лимит времени
+                std::cout << std::setw(12) << "-";
             } else {
-                outfile << duration_time << " ";  // Записываем время в наносекундах
+                std::cout << std::setw(12) 
+                          << std::chrono::duration_cast<std::chrono::nanoseconds>(duration_time).count();
             }
             
             delete[] arr;
         }
         
         delete[] original_arr;
-        outfile << "\n";  // Новая строка для следующего размера
+        std::cout << "\n";
     }
-    
-    outfile.close();
-    std::cout << "COMPLETE\nCheck sorting_times.dat\n";
 }
