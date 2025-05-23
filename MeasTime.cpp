@@ -60,44 +60,6 @@ void quickSort(int* ar, int size, bool (*comp)(int a, int b)) {
     quickSort(ar + i + 1, size - i - 1, comp);
 }
 
-void merge(int* ar, int left, int mid, int right, bool (*comp)(int a, int b)) {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
-
-    int* L = new int[n1];
-    int* R = new int[n2];
-
-    for (int i = 0; i < n1; i++) L[i] = ar[left + i];
-    for (int j = 0; j < n2; j++) R[j] = ar[mid + 1 + j];
-
-    int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2) {
-        if (comp(L[i], R[j])) {
-            ar[k] = L[i];
-            i++;
-        } else {
-            ar[k] = R[j];
-            j++;
-        }
-        k++;
-    }
-
-    while (i < n1) {
-        ar[k] = L[i];
-        i++;
-        k++;
-    }
-
-    while (j < n2) {
-        ar[k] = R[j];
-        j++;
-        k++;
-    }
-
-    delete[] L;
-    delete[] R;
-}
-
 void mergeSort(int* ar, int size, bool (*comp)(int a, int b)) {
     if (size <= 1) return;
 
@@ -174,9 +136,9 @@ void getTime() {
             name_sort[n](arr, size, ascending);
             auto end = std::chrono::high_resolution_clock::now();
             
-            auto duration_time = end - start;  // тип duration<nanoseconds>
+            auto duration_time = end - start;
             
-            if (duration_time > TIME_LIMIT) {  // корректное сравнение duration
+            if (duration_time > TIME_LIMIT) {
                 algorithmStopped[n] = true;
                 std::cout << std::setw(12) << "-";
             } else {
