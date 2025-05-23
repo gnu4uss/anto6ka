@@ -1,8 +1,5 @@
 CXXFLAGS = -g
-finaly: main.o MeasTime.o sorts_high.o
+finaly: main.o MeasTime.o
 	g++ $(CXXFLAGS) -o $@ $^
-
-finaly: main.o MeasTime.o sorts_high.o
-	g++ -g -o $@ $^
 clean:
-	rm -f *.o finaly
+	rm -f *.o finaly sorting_times.dat
